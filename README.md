@@ -8,8 +8,10 @@ Eeschema (Schematic Editor).
 ## Components
 All BOM generation starts with an input `.xml` file that KiCad generates from
 your project’s `.kicad_sch` file. This is referenced as `%I` in the BOM generator
-command. The output file, referenced as `%O`, is the full path to the project including the root of a filename equal to the projects name. An extension + optional suffix should be added to the filepath in the command.
-The quotes are these variables are required in case the filepath contains spaces.\
+command. The output file, referenced as `%O`, is the full path to the project
+including the root of a filename equal to the projects name. An extension +
+optional suffix should be added to the filepath in the command. The quotes around
+these variables are required in case the filepath contains spaces.\
 These paths should get passed to each BOM generation script.
 
 ### bom-gen.py
@@ -51,20 +53,29 @@ script(or placing them directly in the KiCad user plugins directory), they can
 be referenced by just the filename.
 
 ### Examples
-**Generating a Markdown BOM using the included Github Markdown template** \
-This will generate a Markdown table containing a row for every component, with the fields: "ref", "value", "MPN" if defined else "footprint".
+**Generating a Markdown BOM using the included Github Markdown template** 
+([output.md](examples/example-github.md)) \
+This will generate a Markdown table containing a row for every component, with
+the fields: "ref", "value", "MPN" if defined else "footprint".
 ```sh
 python bom-gen.py "%I" -o "%O-bom.md" -t github.md
 ```
 
-**Generating a plain text table using the included template** \
-This will generate a plain text table that is formatted with an 80 character length. Contains the fields: "ref", "value", "MPN" if defined else "footprint". Groups components by value, with one row per group.
+**Generating a plain text table using the included template** 
+([output.txt](examples/example-table.txt)) \
+This will generate a plain text table that is formatted with an 80 character
+length. Contains the fields: "ref", "value", "MPN" if defined else "footprint".
+Groups components by value, with one row per group.
 ```sh
 python bom-gen.py "%I" -o "%O-bom.txt" -t table.txt -g
 ```
 
-**Generating an assembly checklist PDF with asciidoctor-pdf**\
-This will generate a pdf that contains a table row for every component. Contains the columns "P" (Placed), "S" (Sourced), "ref", "value", "MPN" if defined else "footprint", "UPN" (Custom PN).
+**Generating an assembly checklist PDF with asciidoctor-pdf** 
+([intermediate.adoc](examples/example-checklist.adoc))
+([output.pdf](examples/example-checklist.pdf)) \
+This will generate a pdf that contains a table row for every component. Contains
+the columns "P" (Placed), "S" (Sourced), "ref", "value", "MPN" if defined else
+"footprint", "UPN" (Custom PN).
 ```sh
 python bom-gen-pdf.py "%I" "%O-bom.adoc"
 ```
