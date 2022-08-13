@@ -1,0 +1,18 @@
+################################################################################
+#                                                                              #
+#{{"%s v%s Bill of Materials"|format(name, version)|center(78)}}#
+#                                                                              #
+################################################################################
+#          #                    #                                              #
+#   Ref    #       Value        #            Part Number / Footprint           #
+#          #                    #                                              #
+################################################################################
+{% for component in components %}
+|----------|--------------------|----------------------------------------------|
+|{{ component.ref|truncate(10,killwords=True,end="..",leeway=0)|center(10) }}|{{ component.value|truncate(20)|center(20)}}|{{ component.MPN|default(component.footprint.split(':')[1])|truncate(46,killwords=True,leeway=0)|center(46) }}|
+{% endfor %}
+|----------|--------------------|----------------------------------------------|
+################################################################################
+{{ "Generated at %s by kicad-bom-gen"|format(time)|center(80) }}
+
+
